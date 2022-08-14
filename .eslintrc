@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/extensions": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
+    "linebreak-style": "off",
+    "import/no-unresolved": "off",
+    "consistent-return": "off"
+  }
+}
