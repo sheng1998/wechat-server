@@ -1,6 +1,7 @@
 import express from 'express';
 import { Server } from 'socket.io';
 import { port } from '../config/default.config';
+import dbConnect from './utils/db_connect';
 import logger from './utils/logger';
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 // 启动
 const server = app.listen(port, async () => {
   logger.info(`App is running at http://localhost:${port}`);
+  await dbConnect();
 });
 
 // const io = new Server(server, { cors: { origin: '*' } });
