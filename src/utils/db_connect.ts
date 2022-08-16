@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
-import logger from './logger';
 import { mongoose as config } from '../config/default.config';
 
 export default async () => {
   try {
     const connection = await mongoose.connect(config.url);
-    logger.info('DB connected');
+    console.log('数据库连接成功!');
     return connection;
   } catch (error) {
-    logger.error('Could not connect to db');
+    console.error('数据库连接失败!');
     process.exit(1);
   }
 };
