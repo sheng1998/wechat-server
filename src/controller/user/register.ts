@@ -6,7 +6,7 @@ import {
 import { create, findByUsername } from '../../service/user';
 import response from '../../utils/response';
 import { createToken } from '../../utils/token';
-import { cookie as cookieConfig } from '../../../config/default.config';
+import { cookie as cookieConfig } from '../../config/default.config';
 
 const registerController = async (
   req: Request,

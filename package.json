@@ -6,8 +6,8 @@
   "main": "src/app.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "lint": "eslint src config typings --ext .js,.ts",
-    "lint:fix": "eslint src config --fix --ext .js,.ts"
+    "lint": "eslint src typings --ext .js,.ts",
+    "lint:fix": "eslint src --fix --ext .js,.ts"
   },
   "dependencies": {
     "@types/express": "^4.17.13",

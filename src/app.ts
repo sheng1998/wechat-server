@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { port } from '../config/default.config';
+import { port } from './config/default.config';
 import dbConnect from './utils/db_connect';
 import logger from './utils/logger';
 import router from './router';

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { jwt as jwtConfig } from '../../config/default.config';
+import { jwt as jwtConfig } from '../config/default.config';
 
 // 创建token
 const createToken = (data: string | object) => {

@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from 'express';
 import { findByUsername } from '../../service/user';
 import response from '../../utils/response';
 import { createToken } from '../../utils/token';
-import { cookie as cookieConfig } from '../../../config/default.config';
+import { cookie as cookieConfig } from '../../config/default.config';
 
 const loginController = async (
   req: Request,
