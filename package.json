@@ -6,7 +6,7 @@
   "main": "src/app.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "lint": "eslint src config --ext .js,.ts",
+    "lint": "eslint src config typings --ext .js,.ts",
     "lint:fix": "eslint src config --fix --ext .js,.ts"
   },
   "dependencies": {

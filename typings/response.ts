@@ -4,14 +4,14 @@ enum Code {
   failure,
   denied,
   error,
-};
+}
 
 enum Message {
   success = '请求成功!',
   failure = '校验失败!',
   denied = '无权限!',
   error = '系统异常!',
-};
+}
 
 // 状态类型 只能是Code中所枚举的状态
 type Type = keyof typeof Code;
