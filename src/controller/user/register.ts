@@ -1,5 +1,4 @@
 import { Response, Request, NextFunction } from 'express';
-import lodash from 'lodash';
 import {
   username as usernameValidate,
   password as passwordValidate,
@@ -7,6 +6,7 @@ import {
 import { create, findByUsername } from '../../service/user';
 import response from '../../utils/response';
 import { createToken } from '../../utils/token';
+import { cookie as cookieConfig } from '../../../config/default.config';
 
 const registerController = async (
   req: Request,
@@ -54,10 +54,15 @@ const registerController = async (
 
   // 生成token并设置cookie
   const token = createToken({ id: user.id, username });
-  res.cookie('session_id', token, { maxAge: 60 * 24 * 2, httpOnly: true });
+  res.cookie('session_id', token, {
+    maxAge: cookieConfig.maxAge,
+    httpOnly: true,
+  });
 
   // 响应请求
-  response.success(res, lodash.pick(user, ['username', 'password', 'id']));
+  response.success(res, user, {
+    pick: ['username', 'avatar', 'id', 'privileges'],
+  });
   next();
 };
 

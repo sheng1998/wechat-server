@@ -15,6 +15,10 @@ const jwt = {
   expiresIn: '2d',
 };
 
+const cookie = {
+  maxAge: 60 * 24 * 2,
+};
+
 const encryption = {
   /**
    * 公钥私钥生成方法：https://juejin.cn/post/6971447144423096351
@@ -46,4 +50,4 @@ const encryption = {
     '-----END RSA PRIVATE KEY-----',
 };
 
-export { port, routerConfig, mongoose, jwt, encryption };
+export { port, routerConfig, mongoose, jwt, cookie, encryption };

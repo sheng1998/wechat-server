@@ -1,12 +1,13 @@
 import { Response } from 'express';
+import lodash from 'lodash';
 import { Code, Message, Option } from '../../typings/response';
 
 // 请求成功
 const success = (response: Response, data: unknown, options?: Option) => {
-  const { status, message } = options || {};
+  const { status, message, pick } = options || {};
   return response.status(status || 200).send({
     code: Code.success,
-    data,
+    data: pick ? lodash.pick(data, pick) : data,
     message: message || Message.success,
   });
 };

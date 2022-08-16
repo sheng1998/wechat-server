@@ -20,6 +20,7 @@ interface Option {
   type?: Type;
   status?: number;
   message?: unknown;
+  pick?: string[];
 }
 
 export { Code, Type, Message, Option };

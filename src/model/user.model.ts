@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // 模板校验规则
 const userSchema = new mongoose.Schema(
   {
-    avatar: { type: String },
+    avatar: { type: String, default: '' },
     username: { type: String, trim: true, required: true },
     password: { type: String, required: true },
     privileges: {
