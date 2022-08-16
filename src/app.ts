@@ -5,6 +5,7 @@ import dbConnect from './utils/db_connect';
 import logger from './utils/logger';
 import router from './router';
 import ioConnection from './socket.io';
+import errorHandle from './middleware/error_handle';
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use(cookieParser());
 
 // 挂载路由
 app.use('/api/v1', router);
+
+// 错误处理中间件
+app.use(errorHandle);
 
 // 启动
 const server = app.listen(port, async () => {

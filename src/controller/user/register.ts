@@ -48,7 +48,7 @@ const registerController = async (
 
   // 注册失败
   if (!user) {
-    response.failure(res, null, '注册失败!');
+    response.error(res, { error: '未知错误！' }, '注册失败!');
     return;
   }
 
