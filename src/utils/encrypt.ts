@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { JSEncrypt } from 'nodejs-jsencrypt';
 import { encryption } from '../config/default.config';
 
