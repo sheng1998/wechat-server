@@ -9,6 +9,6 @@ const createRequestLogger = async (logger: RequestLogger) => {
   } catch (err) {
     return null;
   }
-}
+};
 
 export { createRequestLogger };
