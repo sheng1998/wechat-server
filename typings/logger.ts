@@ -4,7 +4,7 @@ interface RequestLogger {
   method?: string;
   url?: string;
   protocol?: string;
-  status?: string;
+  status?: number;
   form?: string;
 }
 

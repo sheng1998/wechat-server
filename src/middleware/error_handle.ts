@@ -7,6 +7,8 @@ export default async (
   response: Response,
   next: NextFunction
 ) => {
-  await saveErrorInfo(error);
+  if (process.env.NODE_ENV === 'production') {
+    await saveErrorInfo(error);
+  }
   response.status(500).json({ error: error.message });
 };
