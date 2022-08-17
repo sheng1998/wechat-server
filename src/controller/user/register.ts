@@ -18,39 +18,38 @@ const registerController = async (
   // 校验用户名
   let failureMessage = usernameValidate(username);
   if (failureMessage) {
-    response.failure(res, { type: 'username' }, failureMessage);
-    return;
+    return response.failure(res, { type: 'username' }, failureMessage);
   }
 
   // 校验密码
   failureMessage = passwordValidate(password);
   if (failureMessage) {
-    response.failure(res, { type: 'password' }, failureMessage);
-    return;
+    return response.failure(res, { type: 'password' }, failureMessage);
   }
 
   // 判断用户名是否存在用户表中（用户名禁止重复）
-  let user = await findByUsername(username);
+  let user = await findByUsername(username, next);
+  if (user === undefined) return;
   if (user) {
-    response.failure(
+    return response.failure(
       res,
       { type: 'username' },
       '用户已存在，请更换用户名重试!'
     );
-    return;
   }
 
   // 创建用户
-  user = await create({
-    username: username as string,
-    password: password as string,
-  });
+  user = await create(
+    {
+      username: username as string,
+      password: password as string,
+      privileges: 1,
+    },
+    next
+  );
 
   // 注册失败
-  if (!user) {
-    response.error(res, { error: '未知错误！' }, '注册失败!');
-    return;
-  }
+  if (!user) return;
 
   // 生成token并设置cookie
   const token = createToken({ id: user.id, username });

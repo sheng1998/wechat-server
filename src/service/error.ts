@@ -1,7 +1,7 @@
 import util from 'util';
 import ErrorModel from '../model/error.model';
 
-// 创建用户
+// 保存错误信息
 export default async (error: Error) => {
   try {
     const errorModel = new ErrorModel({

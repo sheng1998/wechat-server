@@ -13,21 +13,19 @@ const loginController = async (
 
   // 校验用户名
   if (!username) {
-    response.failure(res, { type: 'username' }, '请输入用户名!');
-    return;
+    return response.failure(res, { type: 'username' }, '请输入用户名!');
   }
 
   // 校验密码
   if (!password) {
-    response.failure(res, { type: 'password' }, '请输入密码!');
-    return;
+    return response.failure(res, { type: 'password' }, '请输入密码!');
   }
 
   // 查找用户
-  const user = await findByUsername(username);
+  const user = await findByUsername(username, next);
+  if (user === undefined) return;
   if (!user) {
-    response.failure(res, { type: 'username' }, '该用户不存在!');
-    return;
+    return response.failure(res, { type: 'username' }, '该用户不存在!');
   }
 
   // 生成token并设置cookie
