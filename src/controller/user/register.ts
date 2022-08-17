@@ -7,6 +7,7 @@ import { create, findByUsername } from '../../service/user';
 import response from '../../utils/response';
 import { createToken } from '../../utils/token';
 import { cookie as cookieConfig } from '../../config/default.config';
+import { md5, privDecrypt } from '../../utils/encrypt';
 
 const registerController = async (
   req: Request,
@@ -22,7 +23,15 @@ const registerController = async (
   }
 
   // 校验密码
-  failureMessage = passwordValidate(password);
+  if (!password) {
+    return response.failure(res, { type: 'password' }, '请输入密码!');
+  }
+  /**
+   * 尝试解密字符串
+   * 用privDecrypt方法解密，解密失败为null，表示密码没有经过加密，或者加密格式不对
+   * 解密失败就用原来字符串作校验
+   */
+  failureMessage = passwordValidate(privDecrypt(password) || password);
   if (failureMessage) {
     return response.failure(res, { type: 'password' }, failureMessage);
   }
@@ -42,7 +51,8 @@ const registerController = async (
   user = await create(
     {
       username: username as string,
-      password: password as string,
+      // 密码必须加密
+      password: md5(password as string),
       privileges: 1,
     },
     next
