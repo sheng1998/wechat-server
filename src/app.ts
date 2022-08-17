@@ -7,6 +7,7 @@ import router from './router';
 import ioConnection from './socket.io';
 import errorHandle from './middleware/error_handle';
 import loggerFormat from './utils/logger_format';
+import { createStartLogger } from './service/logger';
 
 const app = express();
 
@@ -30,6 +31,9 @@ app.use(errorHandle);
 
 // 启动
 const server = app.listen(port, async () => {
+  if (process.env.NODE_ENV === 'production') {
+    createStartLogger();
+  }
   console.log(
     `仿微信聊天室后台服务已启动, 主页请访问: http://localhost:${port}`
   );

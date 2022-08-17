@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-const loggerSchema = new mongoose.Schema({
+// 请求日志
+const requestLoggerSchema = new mongoose.Schema({
   ip: { type: String, default: '' },
   date: { type: String, default: '' },
   method: { type: String, default: '' },
@@ -11,7 +12,16 @@ const loggerSchema = new mongoose.Schema({
   createAt: { type: Date, default: Date.now },
 });
 
-// 创建模板 执行之后会自动在mongodb中创建相应的模板
-const LoggerModel = mongoose.model('Request-logger', loggerSchema);
+const RequestLoggerModel = mongoose.model(
+  'Request-logger',
+  requestLoggerSchema
+);
 
-export default LoggerModel;
+// 启动日志
+const startLoggerSchema = new mongoose.Schema({
+  createAt: { type: Date, default: Date.now },
+});
+
+const StartLoggerModel = mongoose.model('Start-logger', startLoggerSchema);
+
+export { RequestLoggerModel, StartLoggerModel };
