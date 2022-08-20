@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request } from 'express';
 import {
   username as usernameValidate,
   password as passwordValidate,
@@ -9,11 +9,7 @@ import { createToken } from '../../utils/token';
 import { cookie as cookieConfig } from '../../config/default.config';
 import { md5, privDecrypt } from '../../utils/encrypt';
 
-const registerController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const registerController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   // 校验用户名
@@ -37,8 +33,7 @@ const registerController = async (
   }
 
   // 判断用户名是否存在用户表中（用户名禁止重复）
-  let user = await findByUsername(username, next);
-  if (user === undefined) return;
+  let user = await findByUsername(username);
   if (user) {
     return response.failure(
       res,
@@ -48,15 +43,12 @@ const registerController = async (
   }
 
   // 创建用户
-  user = await create(
-    {
-      username: username as string,
-      // 密码必须加密
-      password: md5(password as string),
-      privileges: 1,
-    },
-    next
-  );
+  user = await create({
+    username: username as string,
+    // 密码必须加密
+    password: md5(password as string),
+    privileges: 1,
+  });
 
   // 注册失败
   if (!user) return;

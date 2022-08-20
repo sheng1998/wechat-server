@@ -17,8 +17,7 @@ const userInfoController = async (
   }
 
   // 查找用户
-  const user = await findById(uid, next);
-  if (user === undefined) return;
+  const user = await findById(uid);
   if (!user) {
     return response.failure(res, '', '该用户不存在!');
   }

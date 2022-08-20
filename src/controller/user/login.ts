@@ -1,15 +1,11 @@
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request } from 'express';
 import { findByUsername } from '../../service/user';
 import response from '../../utils/response';
 import { createToken } from '../../utils/token';
 import { cookie as cookieConfig } from '../../config/default.config';
 import { md5, privDecrypt } from '../../utils/encrypt';
 
-const loginController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const loginController = async (req: Request, res: Response) => {
   // eslint-disable-next-line prefer-const
   let { username, password } = req.body;
 
@@ -30,8 +26,7 @@ const loginController = async (
   }
 
   // 查找用户
-  const user = await findByUsername(username, next);
-  if (user === undefined) return;
+  const user = await findByUsername(username);
   if (!user) {
     return response.failure(res, { type: 'username' }, '该用户不存在!');
   }
