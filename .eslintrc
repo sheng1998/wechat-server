@@ -23,6 +23,7 @@
     "linebreak-style": "off",
     "import/no-unresolved": "off",
     "consistent-return": "off",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "no-console": "off"
   }
 }

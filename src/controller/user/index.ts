@@ -1,15 +1,11 @@
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request } from 'express';
 import { findById } from '../../service/user';
 import response from '../../utils/response';
-import loginController from './login';
+import { checkController, loginController } from './login';
 import registerController from './register';
 
 // 获取用户信息
-const userInfoController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const userInfoController = async (req: Request, res: Response) => {
   const { uid } = req.body;
 
   if (!uid) {
@@ -28,4 +24,9 @@ const userInfoController = async (
   });
 };
 
-export { userInfoController, loginController, registerController };
+export {
+  userInfoController,
+  checkController,
+  loginController,
+  registerController,
+};
