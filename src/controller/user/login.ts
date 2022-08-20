@@ -52,7 +52,6 @@ const loginController = async (
   response.success(res, user, {
     pick: ['username', 'avatar', 'id', 'privileges'],
   });
-  next();
 };
 
 export default loginController;

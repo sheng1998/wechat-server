@@ -72,7 +72,6 @@ const registerController = async (
   response.success(res, user, {
     pick: ['username', 'avatar', 'id', 'privileges'],
   });
-  next();
 };
 
 export default registerController;
