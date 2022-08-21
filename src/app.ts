@@ -1,8 +1,10 @@
 import express from 'express';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { port } from './config/default.config';
 import dbConnect from './utils/db_connect';
+import corsOptionsDelegate from './utils/cors_options_delegate';
 import router from './router';
 import ioConnection from './socket.io';
 import errorHandle from './middleware/error_handle';
@@ -10,6 +12,9 @@ import loggerFormat from './utils/logger_format';
 import { createStartLogger } from './service/logger';
 
 const app = express();
+
+// 配置跨域（必须要在挂载路由前配置）
+app.use(cors(corsOptionsDelegate));
 
 // 连接数据库
 dbConnect();
