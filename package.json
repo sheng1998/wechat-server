@@ -5,10 +5,10 @@
   "private": true,
   "main": "src/app.ts",
   "scripts": {
-    "dev": "set NODE_ENV=development && ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev": "set NODE_ENV=development&& ts-node-dev --respawn --transpile-only src/app.ts",
     "lint": "eslint src typings --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
-    "start": "set NODE_ENV=production && ts-node src/app.ts"
+    "start": "set NODE_ENV=production&& ts-node src/app.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

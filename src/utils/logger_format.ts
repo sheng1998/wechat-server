@@ -7,7 +7,7 @@ export default (logger: string) => {
   const [prefix, ip, date, method, url, protocol, status, info, form] =
     match || [];
   // 保存请求日志
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
     createRequestLogger({
       ip,
       date,

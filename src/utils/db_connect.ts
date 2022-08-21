@@ -7,7 +7,6 @@ export default async () => {
     console.log('数据库连接成功!');
     return connection;
   } catch (error) {
-    console.log(error);
     console.error('数据库连接失败!');
     process.exit(1);
   }

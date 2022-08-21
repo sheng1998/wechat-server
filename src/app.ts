@@ -35,8 +35,8 @@ app.use('/api/v1', router);
 app.use(errorHandle);
 
 // 启动
-const server = app.listen(port, async () => {
-  if (process.env.NODE_ENV === 'production') {
+const server = app.listen(port, () => {
+  if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
     createStartLogger();
   }
   console.log(

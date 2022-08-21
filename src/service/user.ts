@@ -12,7 +12,7 @@ const create = async (user: User, next?: NextFunction) => {
     if (typeof next === 'function') {
       next(error);
     }
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
       saveErrorInfo(error as Error);
     } else {
       console.log(error);
@@ -28,7 +28,7 @@ const findById = async (id: string, next?: NextFunction) => {
     if (typeof next === 'function') {
       next(error);
     }
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
       saveErrorInfo(error as Error);
     } else {
       console.log(error);
@@ -44,7 +44,7 @@ const findByUsername = async (username: string, next?: NextFunction) => {
     if (typeof next === 'function') {
       next(error);
     }
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
       saveErrorInfo(error as Error);
     } else {
       console.log(error);
