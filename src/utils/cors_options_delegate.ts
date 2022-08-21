@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-const corsOrigins = ['119.91.74.150', 'sheng1998.github.io/'];
+const corsOrigins = ['119.91.74.150', 'sheng1998.github.io'];
 
 export default (request: Request, callback: (...arg: any) => void) => {
   const { origin } = request.headers;
@@ -11,10 +11,11 @@ export default (request: Request, callback: (...arg: any) => void) => {
   for (let i = 0; i < corsOrigins.length; i += 1) {
     const item = corsOrigins[i];
     if (
-      origin?.startsWith(`http://${item}`) ||
-      origin?.startsWith(`https://${item}`)
+      origin.startsWith(item) ||
+      origin.startsWith(`http://${item}`) ||
+      origin.startsWith(`https://${item}`)
     ) {
-      callback(null, { origin: true });
+      callback(null, { credentials: true, origin });
       return;
     }
   }
