@@ -10,7 +10,8 @@ import { cookie as cookieConfig } from '../../config/default.config';
 import { md5, privDecrypt } from '../../utils/encrypt';
 
 const registerController = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  // eslint-disable-next-line prefer-const
+  let { username, password } = req.body;
 
   // 校验用户名
   let failureMessage = usernameValidate(username);
@@ -27,7 +28,8 @@ const registerController = async (req: Request, res: Response) => {
    * 用privDecrypt方法解密，解密失败为null，表示密码没有经过加密，或者加密格式不对
    * 解密失败就用原来字符串作校验
    */
-  failureMessage = passwordValidate(privDecrypt(password) || password);
+  password = privDecrypt(password) || password;
+  failureMessage = passwordValidate(password);
   if (failureMessage) {
     return response.failure(res, { type: 'password' }, failureMessage);
   }
