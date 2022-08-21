@@ -16,7 +16,7 @@ const jwt = {
 };
 
 const cookie = {
-  maxAge: 60 * 24 * 2,
+  maxAge: 1000 * 60 * 60 * 24 * 2,
 };
 
 const encryption = {
