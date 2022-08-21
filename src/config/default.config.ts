@@ -1,12 +1,19 @@
+import { ConnectOptions } from 'mongoose';
+
 const port = 3002;
 
 const routerConfig = {
   prefix: '/api/v1',
 };
 
-const mongoose = {
-  url: 'mongodb://127.0.0.1:27017/wechat',
-  options: {},
+// mongodb相关配置
+// 如果代码上传到腾讯云、阿里云上运行需要修改配置
+const mongoose: {
+  url: string;
+  options: ConnectOptions;
+} = {
+  url: 'mongodb://127.0.0.1:27017/',
+  options: { dbName: 'wechat' },
 };
 
 const jwt = {

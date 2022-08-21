@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 .history
+# 自定义的携带密钥的文件不上传代码托管平台
+.secret.config.ts
 dist-ssr
 *.local
 
