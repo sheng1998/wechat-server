@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   checkController,
+  getUserListController,
   loginController,
   registerController,
   userInfoController,
@@ -16,5 +17,8 @@ router.post('/register', registerController);
 router.post('/login', loginController);
 // 检查用户登录状态
 router.get('/check', checkController);
+// 获取用户列表
+// TODO 校验登陆的中间件
+router.get('/list', getUserListController);
 
 export default router;

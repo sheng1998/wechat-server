@@ -52,4 +52,19 @@ const findByUsername = async (username: string, next?: NextFunction) => {
   }
 };
 
-export { create, findById, findByUsername };
+const getUserList = async (next?: NextFunction) => {
+  try {
+    return await UserModel.find({});
+  } catch (error) {
+    if (typeof next === 'function') {
+      next(error);
+    }
+    if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
+      saveErrorInfo(error as Error);
+    } else {
+      console.log(error);
+    }
+  }
+};
+
+export { create, findById, findByUsername, getUserList };

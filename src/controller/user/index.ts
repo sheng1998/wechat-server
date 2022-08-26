@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import { findById } from '../../service/user';
+import { findById, getUserList } from '../../service/user';
 import response from '../../utils/response';
 import { checkController, loginController } from './login';
 import registerController from './register';
@@ -24,9 +24,26 @@ const userInfoController = async (req: Request, res: Response) => {
   });
 };
 
+const getUserListController = async (req: Request, res: Response) => {
+  // 查找用户
+  // TODO 条件(分页等)
+  const userList = (await getUserList()) || [];
+  const result = [];
+
+  // 过滤其他属性
+  for (let i = 0; i < userList.length; i += 1) {
+    const { username, avatar, id, privileges } = userList[i];
+    result.push({ username, avatar, id, privileges });
+  }
+
+  // 响应请求
+  response.success(res, result);
+};
+
 export {
   userInfoController,
   checkController,
   loginController,
   registerController,
+  getUserListController,
 };
