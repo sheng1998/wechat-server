@@ -84,4 +84,11 @@ const checkController = async (req: Request, res: Response) => {
   });
 };
 
-export { loginController, checkController };
+// 退出登录
+const logoutController = async (req: Request, res: Response) => {
+  res.clearCookie('session_id');
+  // 响应请求
+  response.success(res, '', { message: '退出登录成功!' });
+};
+
+export { loginController, checkController, logoutController };

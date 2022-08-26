@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { findById, getUserList } from '../../service/user';
 import response from '../../utils/response';
-import { checkController, loginController } from './login';
+import { checkController, loginController, logoutController } from './login';
 import registerController from './register';
 
 // 获取用户信息
@@ -44,6 +44,7 @@ export {
   userInfoController,
   checkController,
   loginController,
+  logoutController,
   registerController,
   getUserListController,
 };
