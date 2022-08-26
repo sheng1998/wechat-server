@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import authority from '../middleware/authority';
 import {
   checkController,
   getUserListController,
@@ -19,6 +20,6 @@ router.post('/login', loginController);
 router.get('/check', checkController);
 // 获取用户列表
 // TODO 校验登陆的中间件
-router.get('/list', getUserListController);
+router.get('/list', authority, getUserListController);
 
 export default router;
