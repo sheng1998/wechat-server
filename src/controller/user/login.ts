@@ -54,6 +54,7 @@ const loginController = async (req: Request, res: Response) => {
 // 检查用户登录状态
 const checkController = async (req: Request, res: Response) => {
   // 查找用户
+  // eslint-disable-next-line no-use-before-define
   const user = await checkLoginState(req);
   if (!user) return response.failure(res, '', '请先登陆!');
 
@@ -76,7 +77,7 @@ async function checkLoginState(req: Request | string) {
   if (typeof req === 'string') {
     session = req;
   } else {
-    session = req.cookies.session_id
+    session = req.cookies.session_id;
   }
 
   // token不存在
