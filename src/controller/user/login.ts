@@ -71,16 +71,21 @@ const logoutController = async (req: Request, res: Response) => {
 };
 
 // 检查登录状态
-async function checkLoginState(req: Request) {
-  const { session_id } = req.cookies;
+async function checkLoginState(req: Request | string) {
+  let session = '';
+  if (typeof req === 'string') {
+    session = req;
+  } else {
+    session = req.cookies.session_id
+  }
 
   // token不存在
-  if (!session_id) return undefined;
+  if (!session) return undefined;
 
   // 判断 token 是否有效
   let userId = '';
   try {
-    const userInfo = verifyToken(session_id);
+    const userInfo = verifyToken(session);
     userId = (userInfo as JwtPayload)?.id;
     // eslint-disable-next-line no-empty
   } catch {}
