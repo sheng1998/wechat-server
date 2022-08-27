@@ -53,30 +53,9 @@ const loginController = async (req: Request, res: Response) => {
 
 // 检查用户登录状态
 const checkController = async (req: Request, res: Response) => {
-  // eslint-disable-next-line camelcase
-  const { session_id } = req.cookies;
-
-  // token不存在
-  // eslint-disable-next-line camelcase
-  if (!session_id) {
-    return response.failure(res, '', '请先登陆!');
-  }
-
-  // 判断 token 是否有效
-  let userId = '';
-  try {
-    const userInfo = verifyToken(session_id);
-    userId = (userInfo as JwtPayload)?.id;
-    if (!userId) return response.failure(res, '', '请先登陆!');
-  } catch (error) {
-    return response.failure(res, '', '请先登陆!');
-  }
-
   // 查找用户
-  const user = await findById(userId);
-  if (!user) {
-    return response.failure(res, '', '该用户不存在!');
-  }
+  const user = await checkLoginState(req);
+  if (!user) return response.failure(res, '', '请先登陆!');
 
   // 响应请求
   response.success(res, user, {
@@ -91,4 +70,24 @@ const logoutController = async (req: Request, res: Response) => {
   response.success(res, '', { message: '退出登录成功!' });
 };
 
-export { loginController, checkController, logoutController };
+// 检查登录状态
+async function checkLoginState(req: Request) {
+  const { session_id } = req.cookies;
+
+  // token不存在
+  if (!session_id) return undefined;
+
+  // 判断 token 是否有效
+  let userId = '';
+  try {
+    const userInfo = verifyToken(session_id);
+    userId = (userInfo as JwtPayload)?.id;
+    // eslint-disable-next-line no-empty
+  } catch {}
+  if (!userId) return undefined;
+
+  // 查找用户
+  return await findById(userId);
+}
+
+export { loginController, checkController, logoutController, checkLoginState };

@@ -24,6 +24,7 @@ const userInfoController = async (req: Request, res: Response) => {
   });
 };
 
+// 获取用户列表
 const getUserListController = async (req: Request, res: Response) => {
   // 查找用户
   // TODO 条件(分页等)

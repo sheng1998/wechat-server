@@ -52,6 +52,7 @@ const findByUsername = async (username: string, next?: NextFunction) => {
   }
 };
 
+// 获取用户列表
 const getUserList = async (next?: NextFunction) => {
   try {
     return await UserModel.find({});
