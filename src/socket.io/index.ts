@@ -62,13 +62,15 @@ export default function (server: HttpServer) {
       console.log('服务端收到客户端的消息: ', data);
       const { uid, message, type, gid } = data;
       // 将信息保存到数据库(聊天记录)
-      await postMessage({
-        id: userInfo?.id || '',
-        uid,
-        gid,
-        message,
-        type,
-      });
+      if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
+        await postMessage({
+          id: userInfo?.id || '',
+          uid,
+          gid,
+          message,
+          type,
+        });
+      }
       // 判断接受方是否在线（如果在线就直接转发）
       if (userMap.has(uid)) {
         const connections = userMap.get(uid);
