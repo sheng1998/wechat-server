@@ -42,7 +42,7 @@ const loginController = async (req: Request, res: Response) => {
   const token = createToken({ id: user.id, username });
   res.cookie('session_id', token, {
     maxAge: cookieConfig.maxAge,
-    httpOnly: true,
+    httpOnly: false,
   });
 
   // 响应请求
