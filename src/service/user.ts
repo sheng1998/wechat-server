@@ -53,8 +53,13 @@ const findByUsername = async (username: string, next?: NextFunction) => {
 };
 
 // 获取用户列表
-const getUserList = async (next?: NextFunction) => {
+const getUserList = async (id?: string | undefined, next?: NextFunction) => {
   try {
+    if (id) {
+      return await UserModel.find({
+        _id: { $ne: id },
+      });
+    }
     return await UserModel.find({});
   } catch (error) {
     if (typeof next === 'function') {
