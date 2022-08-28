@@ -1,4 +1,5 @@
 import { Response, Request } from 'express';
+import CustomRequest from '../../../typings/request';
 import { findById, getUserList } from '../../service/user';
 import response from '../../utils/response';
 import { checkController, loginController, logoutController } from './login';
@@ -25,10 +26,10 @@ const userInfoController = async (req: Request, res: Response) => {
 };
 
 // 获取用户列表
-const getUserListController = async (req: Request, res: Response) => {
+const getUserListController = async (req: CustomRequest, res: Response) => {
+  if (!req.user) return;
   // 查找用户
-  // TODO 条件(分页等)
-  const userList = (await getUserList()) || [];
+  const userList = (await getUserList(req.user.id)) || [];
   const result = [];
 
   // 过滤其他属性
