@@ -33,9 +33,13 @@ export default async (
       socket.emit('message', data);
     }
     for (let i = 0; i < connections.length; i += 1) {
-      socket
-        .to(connections[i])
-        .emit('message', { id, uid: userInfo?.id, message, type, time: Date.now() });
+      socket.to(connections[i]).emit('message', {
+        id,
+        uid: userInfo?.id,
+        message,
+        type,
+        time: Date.now(),
+      });
     }
   }
   // TODO 群聊
