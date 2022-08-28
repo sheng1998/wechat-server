@@ -1,6 +1,7 @@
 // 收到客户端消息并转发
 import { Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { nanoid } from 'nanoid';
 import { UserDocument } from '../../typings/user';
 import { message as postMessage } from '../service/socket';
 
@@ -13,6 +14,8 @@ export default async (
 ) => {
   console.log('服务端收到客户端的消息: ', data);
   const { uid, message, type, gid } = data;
+  const id = nanoid();
+  // TODO 判断uid、gid是否存在数据库
   // 将信息保存到数据库(聊天记录)
   if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
     await postMessage({
@@ -32,7 +35,7 @@ export default async (
     for (let i = 0; i < connections.length; i += 1) {
       socket
         .to(connections[i])
-        .emit('message', { uid: userInfo?.id, message, type });
+        .emit('message', { id, uid: userInfo?.id, message, type, time: Date.now() });
     }
   }
   // TODO 群聊
