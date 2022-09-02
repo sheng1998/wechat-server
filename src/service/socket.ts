@@ -49,14 +49,18 @@ const disconnect = async (sid: string, next?: NextFunction) => {
 // 发送消息
 const message = async (data: Message, next?: NextFunction) => {
   try {
-    const socketModel = new SocketMessageModel({
+    const messageData: any = {
       user: data.id,
-      receiveUser: data.uid ? data.uid : null,
-      receiveGroup: data.gid ? data.gid : null,
       message: data.message,
       type: data.type,
-      object: data.uid ? 'personal' : 'group',
-    });
+      object: data.object || 'personal',
+    };
+    if (data.object === 'group') {
+      messageData.receiveGroup = data.receive_user_id;
+    } else {
+      messageData.receiveUser = data.receive_user_id;
+    }
+    const socketModel = new SocketMessageModel(messageData);
     return await socketModel.save();
   } catch (error) {
     if (typeof next === 'function') {
