@@ -25,6 +25,7 @@
     "consistent-return": "off",
     "no-return-await": "off",
     "no-console": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-continue": "off"
   }
 }

@@ -34,8 +34,8 @@ export default function (server: HttpServer) {
       socket.disconnect();
     }
 
-    // 收到客户端的消息
-    socket.on('message', async (data) => {
+    // 收到客户端的消息(私聊)
+    socket.on('message-private', async (data) => {
       message(socket, data, userInfo, userMap);
     });
 

@@ -2,9 +2,20 @@
 import { Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { nanoid } from 'nanoid';
+import { TripleDES, enc } from 'crypto-js';
 import { UserDocument } from '../../typings/user';
 import { message as postMessage } from '../service/socket';
 import Message from '../../typings/socket';
+
+// 解密消息
+// eslint-disable-next-line max-len
+const decrypt = (string: string) => {
+  try {
+    return TripleDES.decrypt(string, 'sBUoieHX').toString(enc.Utf8);
+  } catch (error) {
+    return undefined;
+  }
+};
 
 // 收到客户端的消息
 export default async (
@@ -13,7 +24,11 @@ export default async (
   userInfo: UserDocument | null,
   userMap: Map<any, any>
 ) => {
-  console.log('服务端收到客户端的消息: ', data);
+  // TODO 解密失败推送错误
+  console.log('服务端收到客户端的消息: ', {
+    ...data,
+    message: decrypt(data.message),
+  });
   const { receive_user_id, message, type, send_user_id } = data;
   const id = nanoid();
   // TODO 判断uid、gid是否存在数据库
@@ -23,7 +38,7 @@ export default async (
     id: userInfo?.id || '',
     send_user_id,
     receive_user_id,
-    message,
+    message: decrypt(message) || message,
     type,
     object: 'personal',
   });
@@ -31,21 +46,28 @@ export default async (
   // 判断接受方是否在线（如果在线就直接转发）
   if (userMap.has(receive_user_id)) {
     const connections = userMap.get(receive_user_id);
-    // 自己发给自己(文件传输助手)
-    if (receive_user_id === userInfo?.id) {
-      socket.emit('message', data);
-    } else {
+    if (receive_user_id !== userInfo?.id) {
       for (let i = 0; i < connections.length; i += 1) {
-        socket.to(connections[i]).emit('message', {
+        socket.to(connections[i]).emit('message-private', {
+          ...data,
           id,
-          send_user_id: userInfo?.id,
-          receive_user_id: send_user_id,
-          message,
-          type,
           time: Date.now(),
         });
       }
     }
   }
   // TODO 群聊
+  // 考虑多端同时在线的情况下，需要给每个自己发送一次消息(除了当前自己)
+  if (userMap.has(send_user_id)) {
+    const connections = userMap.get(send_user_id);
+    for (let i = 0; i < connections.length; i += 1) {
+      if (connections[i] === socket.id) continue;
+      // 同步消息到其他端(同一用户建立了多个连接)
+      socket.to(connections[i]).emit('message-private-sync', {
+        ...data,
+        id,
+        time: Date.now(),
+      });
+    }
+  }
 };
