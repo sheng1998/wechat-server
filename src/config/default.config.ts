@@ -57,4 +57,6 @@ const encryption = {
     '-----END RSA PRIVATE KEY-----',
 };
 
-export { port, routerConfig, mongoose, jwt, cookie, encryption };
+const uploadBaseDir = 'public/uploads';
+
+export { port, routerConfig, mongoose, jwt, cookie, encryption, uploadBaseDir };
